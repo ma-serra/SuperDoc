@@ -382,6 +382,35 @@ export type FieldAnnotationRun = {
 
 export type Run = TextRun | TabRun | ImageRun | LineBreakRun | BreakRun | FieldAnnotationRun;
 
+/**
+ * Context passed to the parser's get() method during field annotation rendering.
+ */
+export type LayoutEngineParserContext = {
+  /** The field annotation run being resolved. */
+  fieldAnnotation: FieldAnnotationRun;
+};
+
+/**
+ * Custom parser for resolving field annotation tag values at render time.
+ * Modelled after docxtemplater's parser option.
+ *
+ * Called with the field's tag identifier (alias or fieldId); returns an object
+ * whose get() method resolves the final display value from the provided scope.
+ *
+ * Return `null` from get() to keep the original displayLabel unchanged.
+ *
+ * @example
+ * const parser: LayoutEngineParser = (tag) => ({
+ *   get: (scope, context) => scope[tag] ?? null,
+ * });
+ */
+export type LayoutEngineParser = (tag: string) => {
+  get: (
+    scope: Record<string, unknown>,
+    context: LayoutEngineParserContext,
+  ) => string | null;
+};
+
 export type ParagraphBlock = {
   kind: 'paragraph';
   id: BlockId;

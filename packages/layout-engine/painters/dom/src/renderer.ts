@@ -43,6 +43,9 @@ import type {
   TableAttrs,
   TableCellAttrs,
   PositionMapping,
+  FieldAnnotationMetadata,
+  LayoutEngineParser,
+  LayoutEngineParserContext,
 } from '@superdoc/contracts';
 import { calculateJustifySpacing, computeLinePmRange, shouldApplyJustify, SPACE_CHARS } from '@superdoc/contracts';
 import { getPresetShapeSvg } from '@superdoc/preset-geometry';
@@ -314,6 +317,17 @@ type PainterOptions = {
   };
   /** Per-page ruler options */
   ruler?: RulerOptions;
+  /**
+   * Custom parser for resolving field annotation tag values at render time.
+   * When provided, called for each field annotation to resolve its display label.
+   * @see LayoutEngineParser
+   */
+  parser?: LayoutEngineParser;
+  /**
+   * Data scope passed to the parser's get() method.
+   * Keys are field tag names; values are the replacement content.
+   */
+  parserData?: Record<string, unknown>;
 };
 
 type BlockLookupEntry = {
@@ -3978,6 +3992,28 @@ export class DomPainter {
   }
 
   /**
+   * Resolves the display label for a FieldAnnotationRun.
+   *
+   * When a parser option is configured, the field's tag (alias or fieldId) is passed to
+   * the parser, and the returned get() method is called with the configured parserData scope.
+   * If the parser returns a non-null value it replaces the run's displayLabel; otherwise
+   * the original displayLabel is used unchanged.
+   */
+  private resolveFieldAnnotationLabel(run: FieldAnnotationRun): string {
+    if (!this.options.parser) {
+      return run.displayLabel;
+    }
+    const sdtMeta = run.sdt?.type === 'fieldAnnotation' ? (run.sdt as FieldAnnotationMetadata) : null;
+    const tag = sdtMeta?.alias || run.fieldId || '';
+    if (!tag) {
+      return run.displayLabel;
+    }
+    const context: LayoutEngineParserContext = { fieldAnnotation: run };
+    const resolved = this.options.parser(tag).get(this.options.parserData ?? {}, context);
+    return resolved !== null && resolved !== undefined ? resolved : run.displayLabel;
+  }
+
+  /**
    * Renders a FieldAnnotationRun as an inline "pill" element matching super-editor's visual appearance.
    *
    * Field annotations are styled inline elements that display form fields with:
@@ -4100,6 +4136,9 @@ export class DomPainter {
     content.style.pointerEvents = 'none';
     content.setAttribute('contenteditable', 'false');
 
+    // Resolve display label via parser if configured
+    const displayLabel = this.resolveFieldAnnotationLabel(run);
+
     // Render type-specific content
     switch (run.variant) {
       case 'image':
@@ -4113,7 +4152,7 @@ export class DomPainter {
               img.src = run.imageSrc;
             } else {
               // Invalid data URL - fall back to displayLabel
-              content.textContent = run.displayLabel;
+              content.textContent = displayLabel;
               break;
             }
           } else {
@@ -4121,11 +4160,11 @@ export class DomPainter {
             if (sanitized) {
               img.src = sanitized.href;
             } else {
-              content.textContent = run.displayLabel;
+              content.textContent = displayLabel;
               break;
             }
           }
-          img.alt = run.displayLabel;
+          img.alt = displayLabel;
           img.style.height = 'auto';
           img.style.maxWidth = '100%';
           img.style.pointerEvents = 'none';
@@ -4140,7 +4179,7 @@ export class DomPainter {
           annotation.style.lineHeight = 'normal';
           content.style.lineHeight = 'normal';
         } else {
-          content.textContent = run.displayLabel || (run.variant === 'signature' ? 'Signature' : '');
+          content.textContent = displayLabel || (run.variant === 'signature' ? 'Signature' : '');
         }
         break;
       }
@@ -4158,10 +4197,10 @@ export class DomPainter {
             content.style.pointerEvents = 'all';
             content.appendChild(link);
           } else {
-            content.textContent = run.displayLabel;
+            content.textContent = displayLabel;
           }
         } else {
-          content.textContent = run.displayLabel;
+          content.textContent = displayLabel;
         }
         break;
       }
@@ -4176,7 +4215,7 @@ export class DomPainter {
           annotation.style.lineHeight = 'normal';
           content.style.lineHeight = 'normal';
         } else {
-          content.textContent = run.displayLabel;
+          content.textContent = displayLabel;
         }
         break;
       }
@@ -4184,7 +4223,7 @@ export class DomPainter {
       case 'text':
       case 'checkbox':
       default: {
-        content.textContent = run.displayLabel;
+        content.textContent = displayLabel;
         break;
       }
     }

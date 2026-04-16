@@ -7,6 +7,8 @@ import type {
   PainterDOM,
   PageMargins,
   PositionMapping,
+  LayoutEngineParser,
+  LayoutEngineParserContext,
 } from '@superdoc/contracts';
 import { DomPainter } from './renderer.js';
 import type { PageStyles } from './styles.js';
@@ -109,7 +111,21 @@ export type DomPainterOptions = {
    * inch marks and optionally margin handles for interactive margin adjustment.
    */
   ruler?: RulerOptions;
+  /**
+   * Custom parser for resolving field annotation tag values at render time.
+   * When provided, called for each field annotation to resolve its display label.
+   * @see LayoutEngineParser
+   */
+  parser?: LayoutEngineParser;
+  /**
+   * Data scope passed to the parser's get() method.
+   * Keys are field tag names; values are the replacement content.
+   */
+  parserData?: Record<string, unknown>;
 };
+
+// Re-export parser types for consumers
+export type { LayoutEngineParser, LayoutEngineParserContext };
 
 export const createDomPainter = (
   options: DomPainterOptions,
@@ -128,6 +144,8 @@ export const createDomPainter = (
     footerProvider: options.footerProvider,
     virtualization: options.virtualization,
     ruler: options.ruler,
+    parser: options.parser,
+    parserData: options.parserData,
   });
 
   return {
