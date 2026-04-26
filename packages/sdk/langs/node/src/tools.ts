@@ -133,6 +133,12 @@ export type ToolChooserInput = {
  * ```ts
  * const { tools } = await chooseTools({ provider: 'openai' });
  * ```
+ *
+ * @example
+ * ```ts
+ * const { tools } = await chooseTools({ provider: 'vercel' });
+ * // [{ type: 'function', function: { name, description, parameters } }]
+ * ```
  */
 export async function chooseTools(input: ToolChooserInput): Promise<{
   tools: unknown[];

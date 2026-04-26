@@ -84,6 +84,11 @@ def choose_tools(input: ToolChooserInput) -> Dict[str, Any]:
     Example::
 
         result = choose_tools({'provider': 'openai'})
+
+    Vercel example::
+
+        result = choose_tools({'provider': 'vercel'})
+        # [{'type': 'function', 'function': {'name': ..., 'description': ..., 'parameters': ...}}]
     """
     provider = input.get('provider')
     if provider not in ('openai', 'anthropic', 'vercel', 'generic'):

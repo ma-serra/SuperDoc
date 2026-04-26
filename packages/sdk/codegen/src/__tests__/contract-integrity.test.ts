@@ -334,6 +334,20 @@ describe('Intent tool catalog integrity', () => {
       expect(typeof tool.input_schema).toBe('object');
     }
   });
+
+  test('Vercel tools have required function shape', async () => {
+    const bundle = await loadJson<{ tools: Array<Record<string, unknown>> }>(
+      path.join(REPO_ROOT, 'packages/sdk/tools/tools.vercel.json'),
+    );
+
+    for (const tool of bundle.tools) {
+      expect(tool.type).toBe('function');
+      const fn = tool.function as Record<string, unknown>;
+      expect(typeof fn.name).toBe('string');
+      expect(typeof fn.description).toBe('string');
+      expect(typeof fn.parameters).toBe('object');
+    }
+  });
 });
 
 describe('Intent annotation integrity', () => {
