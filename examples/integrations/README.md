@@ -11,6 +11,7 @@ Examples showing how to integrate SuperDoc with various platforms and environmen
 | [chrome-extension](./chrome-extension) | Chrome browser extension |
 | [word-addin](./word-addin) | Microsoft Word add-in |
 | [slack-redlining](./slack-redlining) | Slack integration for document redlining |
+| [legal-workflow](./legal-workflow) | End-to-end legal stack: editor, templates, e-sign, AI, collaboration |
 
 ## Running an Example
 
