@@ -15,7 +15,7 @@ This example implements an end-to-end legal workflow using the SuperDoc ecosyste
 
 ```bash
 cd /tmp/workspace/ma-serra/SuperDoc/examples/integrations/legal-workflow
-npm install
+npm install --legacy-peer-deps
 npm run dev
 ```
 
