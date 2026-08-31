@@ -5,18 +5,6 @@ permissions:
   pull-requests: write
 
 on:
-  pull_request:
-    branches: [main, stable]
-    paths:
-      - 'packages/superdoc/**'
-      - 'packages/layout-engine/**'
-      - 'packages/super-editor/**'
-      - 'packages/word-layout/**'
-      - 'packages/preset-geometry/**'
-      - 'tests/visual/**'
-      - 'shared/**'
-      - '!**/*.md'
-  merge_group:
   workflow_dispatch:
 
 concurrency:

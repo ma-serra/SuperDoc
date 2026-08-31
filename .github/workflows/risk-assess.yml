@@ -8,8 +8,6 @@ name: AI Risk Assessment
 # - Logs full details to workflow output (visible in Actions tab)
 
 on:
-  pull_request:
-    types: [opened]
   workflow_dispatch:
     inputs:
       pr_number:

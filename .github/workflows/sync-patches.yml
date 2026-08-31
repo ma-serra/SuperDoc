@@ -1,9 +1,6 @@
 name: 🔄 Sync stable → main
 
 on:
-  push:
-    branches:
-      - stable
   workflow_dispatch:
 
 permissions:

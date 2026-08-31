@@ -4,11 +4,6 @@ permissions:
   contents: read
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'packages/superdoc/src/**'
-      - 'packages/superdoc/vite.config.js'
   workflow_dispatch:
 
 concurrency:

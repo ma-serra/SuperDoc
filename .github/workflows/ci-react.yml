@@ -4,14 +4,10 @@ permissions:
   contents: read
 
 on:
-  pull_request:
-    paths:
-      - 'packages/react/**'
-  merge_group:
   workflow_dispatch:
 
 concurrency:
-  group: ci-react-${{ github.event.pull_request.number }}
+  group: ci-react-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:

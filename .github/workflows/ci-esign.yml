@@ -4,14 +4,10 @@ permissions:
   contents: read
 
 on:
-  pull_request:
-    paths:
-      - 'packages/esign/**'
-  merge_group:
   workflow_dispatch:
 
 concurrency:
-  group: ci-esign-${{ github.event.pull_request.number }}
+  group: ci-esign-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:

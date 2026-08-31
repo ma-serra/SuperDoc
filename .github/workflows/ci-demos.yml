@@ -1,16 +1,6 @@
 name: CI Demos
 
 on:
-  pull_request:
-    paths:
-      - 'demos/**'
-      - 'packages/superdoc/**'
-      - 'packages/react/**'
-      - 'packages/super-editor/**'
-      - 'packages/layout-engine/**'
-      - 'shared/**'
-      - 'package.json'
-  merge_group:
   workflow_dispatch:
 
 jobs:
