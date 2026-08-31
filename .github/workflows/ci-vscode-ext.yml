@@ -4,11 +4,6 @@ permissions:
   contents: read
 
 on:
-  pull_request:
-    paths:
-      - 'apps/vscode-ext/**'
-      - 'packages/superdoc/src/**'
-  merge_group:
   workflow_dispatch:
 
 concurrency:

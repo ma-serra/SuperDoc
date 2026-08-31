@@ -3,13 +3,6 @@
 name: 📦 Release esign
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'packages/esign/**'
-      - 'pnpm-workspace.yaml'
-      - '!**/*.md'
   workflow_dispatch:
 
 permissions:

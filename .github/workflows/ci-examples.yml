@@ -1,17 +1,6 @@
 name: CI Examples
 
 on:
-  pull_request:
-    paths:
-      - 'examples/**'
-      - 'packages/superdoc/**'
-      - 'packages/react/**'
-      - 'packages/super-editor/**'
-      - 'packages/collaboration-yjs/**'
-      - 'packages/sdk/**'
-      - 'packages/layout-engine/**'
-      - 'shared/**'
-  merge_group:
   workflow_dispatch:
 
 jobs:

@@ -4,10 +4,6 @@ permissions:
   contents: read
 
 on:
-  pull_request:
-    paths:
-      - 'packages/template-builder/**'
-  merge_group:
   workflow_dispatch:
 
 concurrency:

@@ -3,13 +3,6 @@
 name: 📦 Release Create
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'apps/create/**'
-      - 'pnpm-workspace.yaml'
-      - '!**/*.md'
   workflow_dispatch:
 
 permissions:

@@ -4,22 +4,6 @@ permissions:
   contents: read
 
 on:
-  pull_request:
-    branches: [main, stable, 'release/**']
-    paths-ignore:
-      - 'apps/docs/**'
-      - 'apps/mcp/**'
-      - 'apps/vscode-ext/**'
-      - 'demos/**'
-      - 'examples/**'
-      - 'packages/react/**'
-      - 'packages/sdk/**'
-      - 'packages/template-builder/**'
-      - 'packages/esign/**'
-      - 'packages/ai/**'
-      - 'evals/**'
-      - '**/*.md'
-  merge_group:
   workflow_dispatch:
 
 concurrency:

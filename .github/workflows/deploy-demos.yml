@@ -1,11 +1,6 @@
 name: Deploy Demos
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'packages/template-builder/**'
-      - 'packages/esign/**'
   workflow_dispatch:
 
 permissions:

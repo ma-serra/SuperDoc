@@ -1,15 +1,7 @@
 name: 🧪 Dispatch Release Qualification
 
 on:
-  pull_request:
-    branches:
-      - stable
-    types:
-      - opened
-      - ready_for_review
-      - reopened
-      - synchronize
-
+  workflow_dispatch:
 permissions:
   contents: read
   pull-requests: read

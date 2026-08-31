@@ -4,18 +4,6 @@
 name: 📦 Release superdoc
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'packages/superdoc/**'
-      - 'packages/layout-engine/**'
-      - 'packages/super-editor/**'
-      - 'packages/word-layout/**'
-      - 'packages/preset-geometry/**'
-      - 'shared/**'
-      - 'pnpm-workspace.yaml'
-      - '!**/*.md'
   workflow_dispatch:
     inputs:
       pr_number:
