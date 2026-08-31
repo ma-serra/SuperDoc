@@ -3,7 +3,7 @@ name: OOXML Spec Compliance Review
 on:
   workflow_dispatch:
 concurrency:
-  group: spec-review-${{ github.event.pull_request.number }}
+  group: spec-review-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:

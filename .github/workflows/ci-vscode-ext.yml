@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: ci-vscode-ext-${{ github.event.pull_request.number }}
+  group: ci-vscode-ext-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 
 jobs:
